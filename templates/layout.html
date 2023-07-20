@@ -16,22 +16,22 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/">Flask Blog</a>
+          <a class="navbar-brand" href="{{url_for('home')}}">Flask Blog</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle">
             <span class="navbar-toggler-icon"></span>
           </button>    
           <div class="collapse navbar-collapse" id="navbarToggle">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="{{url_for('home')}}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
               </li>                            
             </ul>      
             <div class="navbar-nav">
-              <a href="/login" class="nav-item nav-link">Login</a>
-              <a href="/register" class="nav-item nav-link">Register</a>
+              <a href="{{url_for('login')}}" class="nav-item nav-link">Login</a>
+              <a href="{{url_for('register')}}" class="nav-item nav-link">Register</a>
             </div>
           </div>          
         </div>
@@ -40,6 +40,15 @@
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
           {% block content %} {% endblock %}
         </div>
         <div class="col-md-4 g-3 g-lg-0">
